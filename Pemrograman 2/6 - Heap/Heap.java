@@ -26,6 +26,14 @@ public class Heap {
     public boolean isFull(){
         return currentSize == maxSize;
     }
+
+    public boolean hasLeftChild(int index){
+        return 2*index <= currentSize;
+    }
+
+    public boolean hasRightChild(int index){
+        return 2*index + 1 <= currentSize;
+    }
     
     public boolean insert(int key){
         if (isFull()){
@@ -64,11 +72,11 @@ public class Heap {
         int largerChild;
         Node top = heapArray[index];
         
-        while (2*index <= currentSize){ // has at least left child
+        while (hasLeftChild(index)){ // has at least left child
             int leftChild = 2*index;
             int rightChild = leftChild + 1;
             
-            if (rightChild < currentSize && heapArray[rightChild].getKey() > heapArray[leftChild].getKey()){
+            if (hasRightChild(index) && heapArray[rightChild].getKey() > heapArray[leftChild].getKey()){
                 largerChild = rightChild;
             }
             else{
