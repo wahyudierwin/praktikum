@@ -104,6 +104,7 @@ class Database {
 	public static void tunggu() {
 		int sleepTime = (int) (NAP_TIME * Math.random());
 		try {
+			System.out.println("tunggu.....");
 			Thread.sleep(sleepTime * 1000);
 		}
 		catch (InterruptedException e) {}
@@ -144,7 +145,7 @@ class Database {
 	Semaphore mutex;
 	Semaphore db;
 
-	private static final int NAP_TIME = 15;
+	private static final int NAP_TIME = 5;
 }
 
 
