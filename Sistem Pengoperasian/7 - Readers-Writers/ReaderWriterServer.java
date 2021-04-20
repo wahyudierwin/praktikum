@@ -16,8 +16,8 @@ public class ReaderWriterServer {
         }
     }
 
-    private static final int NUM_OF_WRITERS = 3;
-    private static final int NUM_OF_READERS = 2;
+    private static final int NUM_OF_WRITERS = 1;
+    private static final int NUM_OF_READERS = 1;
 }
 
 class Reader extends Thread {
