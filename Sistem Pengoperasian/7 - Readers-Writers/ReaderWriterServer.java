@@ -29,13 +29,13 @@ class Reader extends Thread {
     public void run() {
         int c;
         while (true) {
-            server.tunggu();
+            Database.tunggu();
             System.out.println("Reader " + readerNum + " wants to read.");
             c = server.mulaiBaca();
             System.out.println("Reader " + readerNum + " is reading. Reader count = " + c);
-            server.tunggu();
-            System.out.println("Reader " + readerNum + " is done reading.");
+            Database.tunggu();
             c = server.selesaiBaca();
+            System.out.println("Reader " + readerNum + " is done reading. Reader count = " + c);
         }
     }
 
@@ -50,14 +50,13 @@ class Writer extends Thread {
     }
 
     public void run() {
-        int c;
         while (true) {
             System.out.println("Writer " + writerNum + " is sleeping.");
-            server.tunggu();
+            Database.tunggu();
             System.out.println("Writer " + writerNum + " wants to write.");
             server.mulaiTulis();
             System.out.println("Writer " + writerNum + " is writing.");
-            server.tunggu();
+            Database.tunggu();
             System.out.println("Writer " + writerNum + " is done writing.");
             server.selesaiTulis();
         }
@@ -69,14 +68,17 @@ class Writer extends Thread {
 
 final class Semaphore {
     public Semaphore() {
+        name = "";
         value = 0;
     }
 
-    public Semaphore(int v) {
+    public Semaphore(String s, int v) {
+        name = s;
         value = v;
     }
 
     public synchronized void tutup() {
+        System.out.println(name + " awal : " + value);
         while (value <= 0) {
             try {
                 wait();
@@ -84,25 +86,30 @@ final class Semaphore {
             catch (InterruptedException e) {}
         }
         value--;
+        System.out.println(name + " akhir : " + value);
     }
 
     public synchronized void buka() {
+        System.out.println(name + " awal : " + value);
         value++;
+        System.out.println(name + " akhir: " + value);
         notify();
     }
 
     private int value;
+    private String name;
 }
 
 class Database {
     public Database() {
         banyakReader = 0;
-        mutex = new Semaphore(1);
-        db = new Semaphore(1);
+        mutex = new Semaphore("mutex", 1);
+        db = new Semaphore("db", 1);
     }
 
     public static void tunggu() {
-        int sleepTime = (int) (NAP_TIME * Math.random());
+        // int sleepTime = (int) (NAP_TIME * Math.random());
+        int sleepTime = (int) (NAP_TIME);
         try {
             System.out.println("tunggu.....");
             Thread.sleep(sleepTime * 1000);
@@ -129,7 +136,7 @@ class Database {
             db.buka();
             mutex.buka();
         }
-        System.out.println("reader count = " + banyakReader);
+        System.out.println("db reader count = " + banyakReader);
         return banyakReader;
     }
 
