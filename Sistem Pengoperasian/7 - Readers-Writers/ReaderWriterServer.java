@@ -108,8 +108,7 @@ class Database {
     }
 
     public static void tunggu() {
-        // int sleepTime = (int) (NAP_TIME * Math.random());
-        int sleepTime = (int) (NAP_TIME);
+        int sleepTime = (int) (NAP_TIME * Math.random());
         try {
             System.out.println("tunggu.....");
             Thread.sleep(sleepTime * 1000);
