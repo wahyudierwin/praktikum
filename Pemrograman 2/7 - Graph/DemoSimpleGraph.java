@@ -1,19 +1,19 @@
 import java.util.ArrayList;
 
 class Vertex {
-	private int value;
+    private int value;
 
-	public Vertex(int value) {
-		this.value = value;
-	}
+    public Vertex(int value) {
+        this.value = value;
+    }
 
-	public int getValue() {
-		return this.value;
-	}
+    public int getValue() {
+        return this.value;
+    }
 
-	public void displayVertex() {
-		System.out.println(this.value);
-	}
+    public void displayVertex() {
+        System.out.println(this.value);
+    }
 }
 
 class Edge {
@@ -31,7 +31,7 @@ class Edge {
     }
 
     public void displayEdge() {
-    	System.out.println(this.one.getValue() + " " + this.two.getValue() + " : " + this.weight);
+        System.out.println(this.one.getValue() + " " + this.two.getValue() + " : " + this.weight);
     }
 }
 
@@ -58,13 +58,13 @@ class SimpleGraph {
         }
 
         for (int i=0 ; i<this.edges.size() ; i++) {
-        	this.edges.get(i).displayEdge();
+            this.edges.get(i).displayEdge();
         }
     }
 }
 
 public class DemoSimpleGraph {
-	public static void main(String[] args) {
+    public static void main(String[] args) {
         SimpleGraph myGraph = new SimpleGraph();
         
         Vertex v1 = new Vertex(1);
@@ -81,7 +81,7 @@ public class DemoSimpleGraph {
         myGraph.addEdge(new Edge(v2, v3));
         myGraph.addEdge(new Edge(v3, v4));
         myGraph.addEdge(new Edge(v4, v1));
-        myGraph.addEdge(new Edge(v1, v4));	
+        myGraph.addEdge(new Edge(v1, v4));    
 
         myGraph.displayGraph();
     }
