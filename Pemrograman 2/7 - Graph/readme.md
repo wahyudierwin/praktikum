@@ -1,0 +1,1 @@
+Class DemoSimpleGraph is my own implementation of graph. However, if you want to use complete code of graph, you may take a look at: https://www.dreamincode.net/forums/topic/377473-graph-data-structure-tutorial/.
