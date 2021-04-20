@@ -21,22 +21,27 @@ public class AdjacencyListDemo {
 
 class AdjacencyListGraph {
 	private int numVertex;
-	private int[][] AdjacencyMatrix;
+	private ArrayList<ArrayList<Integer>> adjacencyList;
 
-	public AdjacencyMatrixGraph(int numVertex) {
+	public AdjacencyListGraph(int numVertex) {
 		this.numVertex = numVertex;
-		AdjacencyMatrix = new int[numVertex+1][numVertex+1];
+		this.adjacencyList = new ArrayList<ArrayList<Integer> >(numVertex+1);
+
+		for (int i = 0; i <= numVertex; i++)
+            this.adjacencyList.add(new ArrayList<Integer>());
 	}
 
 	public void addEdge(int one, int two) {
-		this.AdjacencyMatrix[one][two] = 1;
-		this.AdjacencyMatrix[two][one] = 1;
+		this.adjacencyList.get(one).add(two);
+		this.adjacencyList.get(two).add(one);
 	}
 
 	public void displayGraph() {
 		for (int i=1 ; i<=this.numVertex ; i++) {
-			for (int j=1 ; j<=this.numVertex ; j++) {
-				System.out.print(this.AdjacencyMatrix[i][j] + " ");
+			System.out.print(i + " : ");
+			ArrayList<Integer> neighbor = this.adjacencyList.get(i);
+			for (int j=0 ; j<neighbor.size() ; j++) {
+				System.out.print(neighbor.get(j) + " ");
 			}
 			System.out.println();
 		}

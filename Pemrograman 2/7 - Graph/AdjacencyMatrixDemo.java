@@ -19,22 +19,22 @@ public class AdjacencyMatrixDemo {
 
 class AdjacencyMatrixGraph {
 	private int numVertex;
-	private int[][] AdjacencyMatrix;
+	private int[][] adjacencyMatrix;
 
 	public AdjacencyMatrixGraph(int numVertex) {
 		this.numVertex = numVertex;
-		AdjacencyMatrix = new int[numVertex+1][numVertex+1];
+		this.adjacencyMatrix = new int[numVertex+1][numVertex+1];
 	}
 
 	public void addEdge(int one, int two) {
-		this.AdjacencyMatrix[one][two] = 1;
-		this.AdjacencyMatrix[two][one] = 1;
+		this.adjacencyMatrix[one][two] = 1;
+		this.adjacencyMatrix[two][one] = 1;
 	}
 
 	public void displayGraph() {
 		for (int i=1 ; i<=this.numVertex ; i++) {
 			for (int j=1 ; j<=this.numVertex ; j++) {
-				System.out.print(this.AdjacencyMatrix[i][j] + " ");
+				System.out.print(this.adjacencyMatrix[i][j] + " ");
 			}
 			System.out.println();
 		}
