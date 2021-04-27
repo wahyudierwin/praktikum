@@ -24,7 +24,7 @@ void two()
     {
         for(j=i+1;j<howhung;j++)
         {
-            if(abs(hu[i]-hu[j])>=1&& abs(hu[i]-hu[j])!=4)
+            if(abs(hu[i]-hu[j])>1 && abs((hu[j]+1)%tph - hu[i]) > 1)
             {
                 printf("\n\ncombination %d \n", (s+1));
                 t=hu[i];
