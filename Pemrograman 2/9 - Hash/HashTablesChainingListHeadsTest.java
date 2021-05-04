@@ -122,7 +122,7 @@ class HashTable
             LinkedHashEntry entry = table[i];
             while (entry != null)
             {
-                System.out.print(entry.value +" ");
+                System.out.print("(" + entry.key + "," + entry.value +") ");
                 entry = entry.next;
             }            
         }
