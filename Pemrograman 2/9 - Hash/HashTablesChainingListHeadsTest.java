@@ -99,7 +99,7 @@ class HashTable
             }
         }
     }
-    /* Function myhash which gives a hash value for a given string */
+    /* Function myhash which gives a hash value for a given key */
     private int myhash(int x)
     {
         int hashVal = x%TABLE_SIZE;
