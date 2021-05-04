@@ -89,7 +89,7 @@ public class Hashing {
 
         theFunc.insert2(10);
         theFunc.insert2(10);
-        
+
         for (int data : arrayData) {
             System.out.print(data + " ");
         }
