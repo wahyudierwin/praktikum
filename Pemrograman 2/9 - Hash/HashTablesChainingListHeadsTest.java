@@ -6,15 +6,13 @@ import java.util.Scanner;
 /* Class LinkedHashEntry */
 class LinkedHashEntry 
 {
-    String key;
-    int value;
+    int key;
     LinkedHashEntry next;
  
     /* Constructor */
-    LinkedHashEntry(String key, int value) 
+    LinkedHashEntry(int key) 
     {
         this.key = key;
-        this.value = value;
         this.next = null;
     }
 }
@@ -35,7 +33,7 @@ class HashTable
         for (int i = 0; i < TABLE_SIZE; i++)
             table[i] = null;
     } 
-    /* Function to get number of key-value pairs */
+    /* Function to get number of key */
     public int getSize()
     {
         return size;
@@ -47,7 +45,7 @@ class HashTable
             table[i] = null;
     }
     /* Function to get value of a key */
-    public int get(String key) 
+    public int get(int key) 
     {
         int hash = (myhash( key ) % TABLE_SIZE);
         if (table[hash] == null)
@@ -55,46 +53,43 @@ class HashTable
         else 
         {
             LinkedHashEntry entry = table[hash];
-            while (entry != null && !entry.key.equals(key))
+            while (entry != null && entry.key != key)
                 entry = entry.next;
             if (entry == null)
                 return -1;
             else
-                return entry.value;
+                return entry.key;
         }
     }
-    /* Function to insert a key value pair */
-    public void insert(String key, int value) 
+    /* Function to insert a key */
+    public void insert(int key) 
     {
         int hash = (myhash( key ) % TABLE_SIZE);
         if (table[hash] == null)
-            table[hash] = new LinkedHashEntry(key, value);
+            table[hash] = new LinkedHashEntry(key);
         else 
         {
             LinkedHashEntry entry = table[hash];
-            while (entry.next != null && !entry.key.equals(key))
+            while (entry.next != null && entry.key != key)
                 entry = entry.next;
-            if (entry.key.equals(key))
-                entry.value = value;
-            else
-                entry.next = new LinkedHashEntry(key, value);
+            entry.next = new LinkedHashEntry(key);
         }
         size++;
     }
  
-    public void remove(String key) 
+    public void remove(int key) 
     {
         int hash = (myhash( key ) % TABLE_SIZE);
         if (table[hash] != null) 
         {
             LinkedHashEntry prevEntry = null;
             LinkedHashEntry entry = table[hash];
-            while (entry.next != null && !entry.key.equals(key)) 
+            while (entry.next != null && entry.key != key) 
             {
                 prevEntry = entry;
                 entry = entry.next;
             }
-            if (entry.key.equals(key)) 
+            if (entry.key == key) 
             {
                 if (prevEntry == null)
                     table[hash] = entry.next;
@@ -105,12 +100,9 @@ class HashTable
         }
     }
     /* Function myhash which gives a hash value for a given string */
-    private int myhash(String x )
+    private int myhash(int x)
     {
-        int hashVal = x.hashCode( );
-        hashVal %= TABLE_SIZE;
-        if (hashVal < 0)
-            hashVal += TABLE_SIZE;
+        int hashVal = x%TABLE_SIZE;
         return hashVal;
     }
     /* Function to print hash table */
@@ -118,11 +110,11 @@ class HashTable
     {
         for (int i = 0; i < TABLE_SIZE; i++)
         {
-            System.out.print("\nBucket "+ (i + 1) +" : ");
+            System.out.print("\nBucket "+ i +" : ");
             LinkedHashEntry entry = table[i];
             while (entry != null)
             {
-                System.out.print("(" + entry.key + "," + entry.value +") ");
+                System.out.print(entry.key + " ");
                 entry = entry.next;
             }            
         }
@@ -155,16 +147,16 @@ public class HashTablesChainingListHeadsTest
             switch (choice)
             {
             case 1 : 
-                System.out.println("Enter key and value");
-                ht.insert(scan.next(), scan.nextInt() ); 
+                System.out.println("Enter key");
+                ht.insert(scan.nextInt() ); 
                 break;                          
             case 2 :                 
                 System.out.println("Enter key");
-                ht.remove( scan.next() ); 
+                ht.remove( scan.nextInt() ); 
                 break;                        
             case 3 : 
                 System.out.println("Enter key");
-                System.out.println("Value = "+ ht.get( scan.next() )); 
+                System.out.println("Key = "+ ht.get( scan.nextInt() )); 
                 break;                                   
             case 4 : 
                 ht.makeEmpty();
