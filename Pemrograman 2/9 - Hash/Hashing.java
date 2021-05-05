@@ -42,11 +42,11 @@ public class Hashing {
 
     public void insert2(int key) {
         int indexArr = modMethod(key, arraySize);
-        int i = 1;
         if (apaArrayPenuh(arrayData)) {
             System.out.println("Array penuh!");
         }
         else {
+            int i = 1;
             while(arrayData[indexArr] != -1){ //menggunakan quadratic probing
                 indexArr += i*i;
                 indexArr = indexArr % arraySize;
