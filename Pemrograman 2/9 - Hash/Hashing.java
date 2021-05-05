@@ -49,12 +49,7 @@ public class Hashing {
         else {
             while(arrayData[indexArr] != -1){ //menggunakan quadratic probing
                 indexArr += i*i;
-                if(indexArr == arraySize){
-                    indexArr = 0;
-                }
-                else if(indexArr >= arraySize){
-                    indexArr = indexArr % arraySize;
-                }
+                indexArr = indexArr % arraySize;
                 i++;
             }
             arrayData[indexArr] = key;
@@ -64,20 +59,15 @@ public class Hashing {
     public void insert3(int key) { //Double hashing
         int index1 = modMethod(key, arraySize); //index fungsi hash 1
         int index2 = (key+(key%10))%arraySize; //index fungsi hash 2
+        System.out.println(key + " " + index1 + " " + index2);
         if(apaArrayPenuh(arrayData)){
             System.out.println("Array penuh!");
         }
         else {                                 
             int indexNext = index1;
+            int i = 1;
             while(arrayData[indexNext] != -1){
-                int i = 1;
-                indexNext = index1 + (i * index2);
-                if(indexNext == arraySize){
-                    indexNext=0;
-                }
-                else if(indexNext >= arraySize){
-                    indexNext = indexNext % arraySize;
-                }
+                indexNext = (index1 + (i * index2)) % arraySize;
                 i++;
             }
             arrayData[indexNext]=key;
@@ -87,8 +77,9 @@ public class Hashing {
     public static void main(String[] args) {
         Hashing theFunc = new Hashing(30);
 
-        theFunc.insert2(10);
-        theFunc.insert2(10);
+        theFunc.insert3(10);
+        theFunc.insert3(40);
+        theFunc.insert3(70);
 
         for (int data : arrayData) {
             System.out.print(data + " ");
