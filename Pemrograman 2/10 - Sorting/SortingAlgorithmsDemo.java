@@ -89,13 +89,11 @@ class SortingAlgorithms {
 class SortingAlgorithmsDemo {
     public static void main(String[] args) {
         // int[] data = new int[10];
-
         // data[0] = 10;
         // data[1] = 5;
 
         // SortingAlgorithms sortingAlgorithms = new SortingAlgorithms(data);
         // sortingAlgorithms.printData();
-
         // System.out.println("-----------------------------------------");
 
         SortingAlgorithms sortingAlgorithms = new SortingAlgorithms(10);
