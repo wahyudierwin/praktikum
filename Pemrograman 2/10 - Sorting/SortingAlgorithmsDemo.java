@@ -1,5 +1,4 @@
 import java.util.Random;
-import java.util.ArrayList;
 
 class SortingAlgorithms {
     private int[] data;
@@ -22,8 +21,9 @@ class SortingAlgorithms {
 
     public void printData() {
         for (int i=0 ; i<this.data.length ; i++) {
-            System.out.println(this.data[i]);
+            System.out.print(this.data[i] + " ");
         }
+        System.out.println();
     }
 
     public void bubbleSort() {
@@ -46,42 +46,46 @@ class SortingAlgorithms {
         if (firstIndex == lastIndex) return;
 
         int halfIndex = (int) (firstIndex + lastIndex) / 2;
-        helperMergeSort(data, 0, halfIndex);
+        helperMergeSort(data, firstIndex, halfIndex);
         helperMergeSort(data, halfIndex + 1, lastIndex);
-        merge(data, 0, halfIndex, lastIndex);
+        merge(data, firstIndex, halfIndex, lastIndex);
     }
 
     private void merge(int[] data, int firstIndex, int halfIndex, int lastIndex) {
-        ArrayList<Integer> arrayTemp = new ArrayList<Integer>();
+        int[] arrayTemp = new int[lastIndex - firstIndex + 1];
 
-        int i = firstIndex, j = halfIndex + 1;
+        int i = firstIndex, j = halfIndex + 1, idx = 0;
 
         while ((i <= halfIndex) && (j <= lastIndex)) {
             if (data[i] <= data[j]) {
-                arrayTemp.add(data[i]);
+                arrayTemp[idx] = data[i];
                 i++;
+                idx++;
             }
             else {
-                arrayTemp.add(data[j]);
+                arrayTemp[idx] = data[j];
                 j++;
+                idx++;
             }
         }
 
         if (i == halfIndex + 1) { // add all remaining items in second half
             while (j <= lastIndex) {
-                arrayTemp.add(data[j]);
+                arrayTemp[idx] = data[j];
                 j++;
+                idx++;
             }
         }
         else if (j == lastIndex + 1){ // add all remaining items in first half
             while (i <= halfIndex) {
-                arrayTemp.add(data[i]);
+                arrayTemp[idx] = data[i];
                 i++;
+                idx++;
             }
         }
 
-        for (int k=0 ; k<arrayTemp.size() ; k++) {
-            data[k + firstIndex] = (int) arrayTemp.get(k);
+        for (int k=0 ; k<arrayTemp.length ; k++) {
+            data[k + firstIndex] = arrayTemp[k];
         }
     }
 }
@@ -96,14 +100,13 @@ class SortingAlgorithmsDemo {
         // sortingAlgorithms.printData();
         // System.out.println("-----------------------------------------");
 
-        SortingAlgorithms sortingAlgorithms = new SortingAlgorithms(10);
+        SortingAlgorithms sortingAlgorithms = new SortingAlgorithms(100);
         sortingAlgorithms.printData();
 
         // sortingAlgorithms.bubbleSort();
-        sortingAlgorithms.mergeSort();
+        // sortingAlgorithms.mergeSort();
 
         System.out.println("-----------------------------------------");
-
         sortingAlgorithms.printData();
 
     }
