@@ -10,7 +10,7 @@ class SortingAlgorithms {
 
         Random random = new Random();
         for (int i=0 ; i<this.numData ; i++) {
-            this.data[i] = Math.abs(random.nextInt()) % 100;
+            this.data[i] = Math.abs(random.nextInt()) % 10000;
         }
     }
 
@@ -39,15 +39,15 @@ class SortingAlgorithms {
     }
 
     public void mergeSort() {
-        helperMergeSort(this.data, 0, this.numData-1);
+        recursiveMergeSort(this.data, 0, this.numData-1);
     }
 
-    private void helperMergeSort(int[] data, int firstIndex, int lastIndex) {
+    private void recursiveMergeSort(int[] data, int firstIndex, int lastIndex) {
         if (firstIndex == lastIndex) return;
 
         int halfIndex = (int) (firstIndex + lastIndex) / 2;
-        helperMergeSort(data, firstIndex, halfIndex);
-        helperMergeSort(data, halfIndex + 1, lastIndex);
+        recursiveMergeSort(data, firstIndex, halfIndex);
+        recursiveMergeSort(data, halfIndex + 1, lastIndex);
         merge(data, firstIndex, halfIndex, lastIndex);
     }
 
@@ -88,9 +88,34 @@ class SortingAlgorithms {
             data[k + firstIndex] = arrayTemp[k];
         }
     }
+
+    public void countingSort() {
+        // find max data
+        int maxData = -1;
+        for (int i=0 ; i<this.numData ; i++) {
+            if (this.data[i] > maxData) {
+                maxData = this.data[i];
+            }
+        }
+
+        int[] countArray = new int[maxData + 1];
+
+        for (int i=0 ; i<this.numData ; i++){
+            countArray[this.data[i]]++;
+        }
+
+        int idx = 0;
+        for (int i=0 ; i<=maxData ; i++) {
+            while (countArray[i] > 0) {
+                this.data[idx] = i;
+                countArray[i]--;
+                idx++;
+            }
+        }
+    }
 }
 
-class SortingAlgorithmsDemo {
+public class SortingAlgorithmsDemo {
     public static void main(String[] args) {
         // int[] data = new int[10];
         // data[0] = 10;
@@ -102,12 +127,16 @@ class SortingAlgorithmsDemo {
 
         SortingAlgorithms sortingAlgorithms = new SortingAlgorithms(100);
         sortingAlgorithms.printData();
-
-        // sortingAlgorithms.bubbleSort();
+        long startTime = System.currentTimeMillis();
+        sortingAlgorithms.bubbleSort();
         // sortingAlgorithms.mergeSort();
+        // sortingAlgorithms.countingSort();
 
         System.out.println("-----------------------------------------");
+        long finishTime = System.currentTimeMillis();
         sortingAlgorithms.printData();
+
+        System.out.println("Running time in ms: " + (finishTime - startTime));
 
     }
 }
