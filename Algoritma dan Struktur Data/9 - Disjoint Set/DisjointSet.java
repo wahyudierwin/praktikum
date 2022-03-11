@@ -1,19 +1,19 @@
 import java.util.ArrayList;
 
 public class DisjointSet {
-    private ArrayList<Integer> parent;
+    private int[] parent;
     private int sz;
     
     public DisjointSet(int numItem){
         sz = numItem;
-        this.parent = new ArrayList<Integer>();
-        for (int i=0 ; i<=this.sz ; i++){
-            this.parent.add(i);
+        this.parent = new int[sz + 1];
+        for (int i=1 ; i<=this.sz ; i++){
+            this.parent[i] = i;
         }
     }
     
     public int findParent(int item){
-        int currentParent = this.parent.get(item);
+        int currentParent = this.parent[item];
         if (item == currentParent){
             return item;
         }
@@ -36,13 +36,13 @@ public class DisjointSet {
             if (firstItemParent < secondItemParent) smallestParent = firstItemParent;
             else smallestParent = secondItemParent;
             
-            this.parent.set(secondItem, smallestParent);
+            this.parent[secondItem] = smallestParent;
         }
     }
     
     public void print(){
         for (int i=1 ; i<=this.sz ; i++){
-            System.out.println("Parent of " + i + " = " + this.parent.get(i));
+            System.out.println("Parent of " + i + " = " + this.parent[i]);
         }
     }
 }
