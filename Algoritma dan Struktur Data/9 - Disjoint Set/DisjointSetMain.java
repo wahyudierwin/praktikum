@@ -1,5 +1,5 @@
 public class DisjointSetMain {
-	public static void main(String[] args) {
+    public static void main(String[] args) {
         DisjointSet disjointSet = new DisjointSet(10);
         disjointSet.print();
         

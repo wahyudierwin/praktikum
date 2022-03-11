@@ -1,21 +1,21 @@
 public class KMPSolver {
-	public void search(String text, String pattern){
-		int textLen = text.length();
-		int patternLen = pattern.length();
+    public void search(String text, String pattern){
+        int textLen = text.length();
+        int patternLen = pattern.length();
 
-		int[] lps = computeLPSArray(pattern, patternLen);
+        int[] lps = computeLPSArray(pattern, patternLen);
 
-		int textIndex = 0;
-		int patternIndex = 0;
+        int textIndex = 0;
+        int patternIndex = 0;
 
-		boolean isFound = false;
+        boolean isFound = false;
         while (textIndex < textLen) {
             if (pattern.charAt(patternIndex) == text.charAt(textIndex)) {
                 patternIndex++;
                 textIndex++;
             }
             if (patternIndex == patternLen) {
-            	isFound = true;
+                isFound = true;
                 System.out.println("Found pattern at index " + (textIndex - patternIndex));
                 patternIndex = lps[patternIndex - 1];
             }
@@ -24,7 +24,7 @@ public class KMPSolver {
                     patternIndex = lps[patternIndex - 1];
                 }
                 else{
-                	textIndex++;
+                    textIndex++;
                 }
             }
         }
@@ -34,31 +34,31 @@ public class KMPSolver {
         }
     }
 
-	private int[] computeLPSArray(String pattern, int patternLen){
-		int[] lps = new int[patternLen];
+    private int[] computeLPSArray(String pattern, int patternLen){
+        int[] lps = new int[patternLen];
 
-		int curLen = 0;
-		int patternIndex = 1;
+        int curLen = 0;
+        int patternIndex = 1;
 
-		lps[0] = 0;
+        lps[0] = 0;
 
-		while (patternIndex < patternLen){
-			if (pattern.charAt(patternIndex) == pattern.charAt(curLen)){
-				curLen++;
-				lps[patternIndex] = curLen;
-				patternIndex++;
-			}
-			else{
-				if (curLen != 0){
-					curLen = lps[curLen - 1];
-				}
-				else{
-					lps[patternIndex] = curLen;
-					patternIndex++;
-				}
-			}
-		}
+        while (patternIndex < patternLen){
+            if (pattern.charAt(patternIndex) == pattern.charAt(curLen)){
+                curLen++;
+                lps[patternIndex] = curLen;
+                patternIndex++;
+            }
+            else{
+                if (curLen != 0){
+                    curLen = lps[curLen - 1];
+                }
+                else{
+                    lps[patternIndex] = curLen;
+                    patternIndex++;
+                }
+            }
+        }
 
-		return lps;
-	}
+        return lps;
+    }
 }
