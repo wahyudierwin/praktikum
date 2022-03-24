@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class DisjointSet {
     private Set[] sets;
     private int sz;
