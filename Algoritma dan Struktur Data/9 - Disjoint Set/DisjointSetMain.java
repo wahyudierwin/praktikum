@@ -1,12 +1,18 @@
 public class DisjointSetMain {
     public static void main(String[] args) {
-        DisjointSet disjointSet = new DisjointSet(10);
+        DisjointSet disjointSet = new DisjointSet(5);
         disjointSet.print();
         
-        System.out.println(disjointSet.findParent(1));
-        
-        disjointSet.union(3, 6);
-        
+        disjointSet.union(3, 4);
+        System.out.println("After union 3 and 4:");
         disjointSet.print();
+        disjointSet.printRank();
+
+        disjointSet.union(1, 2);
+        disjointSet.union(1, 3);
+        
+        System.out.println("Final result:");
+        disjointSet.print();
+        disjointSet.printRank();
     }
 }

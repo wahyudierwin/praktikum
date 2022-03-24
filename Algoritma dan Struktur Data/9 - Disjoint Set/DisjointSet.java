@@ -12,25 +12,25 @@ public class DisjointSet {
         }
     }
     
-    public int findParent(int item){
+    public int find(int item){
         int parent = this.sets[item].getParent();
         if (item == parent){
             return item;
         }
         else{
-            parent = findParent(parent);
+            parent = find(parent);
             this.sets[item].setParent(parent); // path compression
             return parent;
         }
     }
 
     public boolean isSameSet(int firstItem, int secondItem){
-        return findParent(firstItem) == findParent(secondItem);
+        return find(firstItem) == find(secondItem);
     }
     
     public void union(int firstItem, int secondItem){ // union by rank
-        int firstItemParent = findParent(firstItem);
-        int secondItemParent = findParent(secondItem);
+        int firstItemParent = find(firstItem);
+        int secondItemParent = find(secondItem);
 
         if (firstItemParent != secondItemParent){
             int firstItemRank = this.sets[firstItem].getRank();
@@ -51,7 +51,13 @@ public class DisjointSet {
     
     public void print(){
         for (int i=1 ; i<=this.sz ; i++){
-            System.out.println("Parent of " + i + " = " + this.sets[i].getParent());
+            System.out.println("Parent of " + i + " = " + find(i));
+        }
+    }
+
+    public void printRank(){
+        for (int i=1 ; i<=this.sz ; i++){
+            System.out.println("Rank of " + i + " = " + this.sets[i].getRank());
         }
     }
 }
