@@ -1,5 +1,30 @@
-public class KMPSolver {
-    public void search(String text, String pattern){
+public class StringMatcher {
+    public void naive(String text, String pattern){
+        int textLen = text.length();
+        int patternLen = pattern.length();
+
+        int indexFound = -1;
+
+        for (int i=0 ; i<textLen ; i++){
+            boolean found = true;
+            for (int j=0 ; j<patternLen ; j++){
+                if ((i+j >= textLen) || (text.charAt(i+j) != pattern.charAt(j))){
+                    found = false;
+                }
+            }
+            if (found){
+                indexFound = i;
+            }
+        }
+        if (indexFound != -1){
+            System.out.println("Found pattern at index " + indexFound + " using naive.");
+        }
+        else{
+            System.out.println("Pattern not found using naive.");
+        }
+    }
+
+    public void kmp(String text, String pattern){
         int textLen = text.length();
         int patternLen = pattern.length();
 
@@ -16,7 +41,7 @@ public class KMPSolver {
             }
             if (patternIndex == patternLen) {
                 isFound = true;
-                System.out.println("Found pattern at index " + (textIndex - patternIndex));
+                System.out.println("Found pattern at index " + (textIndex - patternIndex) + " using KMP.");
                 patternIndex = lps[patternIndex - 1];
             }
             else if (textIndex < textLen && pattern.charAt(patternIndex) != text.charAt(textIndex)) {
@@ -30,7 +55,7 @@ public class KMPSolver {
         }
 
         if (isFound == false){
-            System.out.println("Pattern not found");
+            System.out.println("Pattern not found using KMP.");
         }
     }
 

@@ -1,8 +1,8 @@
 import java.util.Scanner;
 
-public class KMPSolverMain {
+public class StringMatcherMain {
     public static void main(String args[]){
-        KMPSolver kmpSolver = new KMPSolver();
+        StringMatcher matcher = new StringMatcher();
 
         Scanner sc = new Scanner(System.in);
         String text, pattern;
@@ -13,6 +13,7 @@ public class KMPSolverMain {
         System.out.println("Input pattern: ");
         pattern = sc.nextLine();        
         
-        kmpSolver.search(text, pattern);
+        matcher.naive(text, pattern);
+        matcher.kmp(text, pattern);
     }
 }
