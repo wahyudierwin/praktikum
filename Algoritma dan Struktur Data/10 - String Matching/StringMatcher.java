@@ -3,23 +3,22 @@ public class StringMatcher {
         int textLen = text.length();
         int patternLen = pattern.length();
 
-        int indexFound = -1;
+        boolean found = false;
 
         for (int i=0 ; i<textLen ; i++){
-            boolean found = true;
+            boolean current_found = true;
             for (int j=0 ; j<patternLen ; j++){
                 if ((i+j >= textLen) || (text.charAt(i+j) != pattern.charAt(j))){
-                    found = false;
+                    current_found = false;
+                    break;
                 }
             }
-            if (found){
-                indexFound = i;
+            if (current_found){
+                found = true;
+                System.out.println("Found pattern at index " + i + " using naive.");    
             }
         }
-        if (indexFound != -1){
-            System.out.println("Found pattern at index " + indexFound + " using naive.");
-        }
-        else{
+        if (!found){
             System.out.println("Pattern not found using naive.");
         }
     }
@@ -33,14 +32,14 @@ public class StringMatcher {
         int textIndex = 0;
         int patternIndex = 0;
 
-        boolean isFound = false;
+        boolean found = false;
         while (textIndex < textLen) {
             if (pattern.charAt(patternIndex) == text.charAt(textIndex)) {
                 patternIndex++;
                 textIndex++;
             }
             if (patternIndex == patternLen) {
-                isFound = true;
+                found = true;
                 System.out.println("Found pattern at index " + (textIndex - patternIndex) + " using KMP.");
                 patternIndex = lps[patternIndex - 1];
             }
@@ -54,7 +53,7 @@ public class StringMatcher {
             }
         }
 
-        if (isFound == false){
+        if (!found){
             System.out.println("Pattern not found using KMP.");
         }
     }
