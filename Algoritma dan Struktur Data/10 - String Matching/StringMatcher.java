@@ -1,5 +1,5 @@
 public class StringMatcher {
-    public void naive(String text, String pattern){
+    public static void naive(String text, String pattern){
         int textLen = text.length();
         int patternLen = pattern.length();
 
@@ -23,7 +23,7 @@ public class StringMatcher {
         }
     }
 
-    public void kmp(String text, String pattern){
+    public static void kmp(String text, String pattern){
         int textLen = text.length();
         int patternLen = pattern.length();
 
@@ -58,7 +58,7 @@ public class StringMatcher {
         }
     }
 
-    private int[] computeLPSArray(String pattern, int patternLen){
+    private static int[] computeLPSArray(String pattern, int patternLen){
         int[] lps = new int[patternLen];
 
         int curLen = 0;

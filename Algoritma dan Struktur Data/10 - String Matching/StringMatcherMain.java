@@ -2,8 +2,6 @@ import java.util.Scanner;
 
 public class StringMatcherMain {
     public static void main(String args[]){
-        StringMatcher matcher = new StringMatcher();
-
         Scanner sc = new Scanner(System.in);
         String text, pattern;
 
@@ -13,7 +11,7 @@ public class StringMatcherMain {
         System.out.println("Input pattern: ");
         pattern = sc.nextLine();        
         
-        matcher.naive(text, pattern);
-        matcher.kmp(text, pattern);
+        StringMatcher.naive(text, pattern);
+        StringMatcher.kmp(text, pattern);
     }
 }
