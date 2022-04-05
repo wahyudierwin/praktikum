@@ -33,23 +33,19 @@ public class StringMatcher {
         int patternIndex = 0;
 
         boolean found = false;
-        while (textIndex < textLen) {
-            if (pattern.charAt(patternIndex) == text.charAt(textIndex)) {
-                patternIndex++;
-                textIndex++;
-            }
-            if (patternIndex == patternLen) {
-                found = true;
-                System.out.println("Found pattern at index " + (textIndex - patternIndex) + " using KMP.");
-                patternIndex = lps[patternIndex - 1];
-            }
-            else if (textIndex < textLen && pattern.charAt(patternIndex) != text.charAt(textIndex)) {
-                if (patternIndex != 0){
-                    patternIndex = lps[patternIndex - 1];
+        int j=0;
+
+        for (int i=0 ; i<textLen ; i++){
+            if ((j < patternLen) && (text.charAt(i) == pattern.charAt(j))){
+                j++;
+                if (j == patternLen){
+                    found = true;
+                    System.out.println("Found pattern at index " + (i - j + 1) + " using KMP.");
                 }
-                else{
-                    textIndex++;
-                }
+            }
+            else if (j > 0){
+                j = lps[j-1];
+                i--; // it will be incremented in next iteration
             }
         }
 
@@ -62,23 +58,22 @@ public class StringMatcher {
         int[] lps = new int[patternLen];
 
         int curLen = 0;
-        int patternIndex = 1;
+        int i = 1;
 
         lps[0] = 0;
 
-        while (patternIndex < patternLen){
-            if (pattern.charAt(patternIndex) == pattern.charAt(curLen)){
+        for (i=1 ; i<patternLen ; i++){
+            if (pattern.charAt(i) == pattern.charAt(curLen)){
                 curLen++;
-                lps[patternIndex] = curLen;
-                patternIndex++;
+                lps[i] = curLen;
             }
             else{
-                if (curLen != 0){
-                    curLen = lps[curLen - 1];
+                while ((curLen > 0) && (pattern.charAt(i) != pattern.charAt(curLen))){
+                    curLen = lps[curLen-1];
                 }
-                else{
-                    lps[patternIndex] = curLen;
-                    patternIndex++;
+                if (curLen > 0){
+                    curLen++;
+                    lps[i] = curLen;
                 }
             }
         }
