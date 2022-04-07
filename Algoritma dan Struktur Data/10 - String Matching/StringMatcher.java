@@ -58,11 +58,10 @@ public class StringMatcher {
         int[] lps = new int[patternLen];
 
         int curLen = 0;
-        int i = 1;
 
         lps[0] = 0;
 
-        for (i=1 ; i<patternLen ; i++){
+        for (int i=1 ; i<patternLen ; i++){
             if (pattern.charAt(i) == pattern.charAt(curLen)){
                 curLen++;
                 lps[i] = curLen;
@@ -71,7 +70,7 @@ public class StringMatcher {
                 while ((curLen > 0) && (pattern.charAt(i) != pattern.charAt(curLen))){
                     curLen = lps[curLen-1];
                 }
-                if (curLen > 0){
+                if (pattern.charAt(i) == pattern.charAt(curLen)){
                     curLen++;
                     lps[i] = curLen;
                 }

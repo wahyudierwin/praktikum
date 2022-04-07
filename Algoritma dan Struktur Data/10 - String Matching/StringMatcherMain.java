@@ -9,7 +9,8 @@ public class StringMatcherMain {
         text = sc.nextLine();
 
         System.out.println("Input pattern: ");
-        pattern = sc.nextLine();        
+        do pattern = sc.nextLine();
+        while (pattern.equals(""));
         
         StringMatcher.naive(text, pattern);
         StringMatcher.kmp(text, pattern);
