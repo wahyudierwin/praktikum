@@ -5,10 +5,10 @@ public class StringMatcher {
 
         boolean found = false;
 
-        for (int i=0 ; i<textLen ; i++){
+        for (int i=0 ; i+patternLen <= textLen ; i++){
             boolean current_found = true;
             for (int j=0 ; j<patternLen ; j++){
-                if ((i+j >= textLen) || (text.charAt(i+j) != pattern.charAt(j))){
+                if (text.charAt(i+j) != pattern.charAt(j)){
                     current_found = false;
                     break;
                 }
@@ -36,16 +36,16 @@ public class StringMatcher {
         int j=0;
 
         for (int i=0 ; i<textLen ; i++){
-            if ((j < patternLen) && (text.charAt(i) == pattern.charAt(j))){
+            while ((j > 0) && (text.charAt(i) != pattern.charAt(j))) {
+                j = lps[j-1];
+            }
+            if (text.charAt(i) == pattern.charAt(j)){
                 j++;
                 if (j == patternLen){
                     found = true;
                     System.out.println("Found pattern at index " + (i - j + 1) + " using KMP.");
+                    j = lps[j-1];
                 }
-            }
-            else if (j > 0){
-                j = lps[j-1];
-                i--; // it will be incremented in next iteration
             }
         }
 
@@ -58,23 +58,16 @@ public class StringMatcher {
         int[] lps = new int[patternLen];
 
         int curLen = 0;
-        int i = 1;
 
         lps[0] = 0;
 
-        for (i=1 ; i<patternLen ; i++){
+        for (int i=1 ; i<patternLen ; i++){
+            while ((curLen > 0) && (pattern.charAt(i) != pattern.charAt(curLen))){
+                curLen = lps[curLen-1];
+            }
             if (pattern.charAt(i) == pattern.charAt(curLen)){
                 curLen++;
                 lps[i] = curLen;
-            }
-            else{
-                while ((curLen > 0) && (pattern.charAt(i) != pattern.charAt(curLen))){
-                    curLen = lps[curLen-1];
-                }
-                if (curLen > 0){
-                    curLen++;
-                    lps[i] = curLen;
-                }
             }
         }
 
