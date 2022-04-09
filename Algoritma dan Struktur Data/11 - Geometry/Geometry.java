@@ -1,6 +1,6 @@
 import java.util.Arrays;
 
-public class ConvexHull {
+public class Geometry {
     public static double cross(Point O, Point A, Point B) {
         return (A.x - O.x) * (B.y - O.y) - (A.y - O.y) * (B.x - O.x);
     }
