@@ -10,60 +10,60 @@ public class Geometry {
         return cross(p, q, r) > 0;
     }
 
-    public static Point[] convex_hull(Point[] P) {
+    public static Point[] convexHull(Point[] P) {
         if (P.length > 2) {
-            int n = P.length, k = 0;
-            Point[] H = new Point[2 * n];
+            int n = P.length, upperLength = 0, lowerLength = 0;
+            Point[] lowerHull = new Point[n];
+            Point[] upperHull = new Point[n];
 
             Arrays.sort(P);
 
-            // Build lower hull
-            for (int i = 0; i < n; i++) {
-                while (k >= 2 && !ccw(H[k - 2], H[k - 1], P[i])){ // turn right or collinear
-                    k--;
+            // Build lower hull first
+            lowerHull[0] = P[0];
+            lowerHull[1] = P[1];
+            lowerLength = 2;
+            for (int i = 2; i < n; i++) {
+                while (lowerLength >= 2
+                    && !ccw(lowerHull[lowerLength - 2], lowerHull[lowerLength - 1], P[i])){
+                    lowerLength--;
                 }
-                H[k] = P[i];
-                k++;
+                lowerHull[lowerLength] = P[i];
+                lowerLength++;
             }
 
             // Build upper hull
-            for (int i = n - 2, t = k + 1; i >= 0; i--) {
-                while (k >= t && !ccw(H[k - 2], H[k - 1], P[i])){
-                    k--;
+            upperHull[0] = P[n-1];
+            upperHull[1] = P[n-2];
+            upperLength = 2;
+            for (int i = n - 3; i >= 0; i--) {
+                while (upperLength >= 2
+                    && !ccw(upperHull[upperLength - 2], upperHull[upperLength - 1], P[i])){
+                    upperLength--;
                 }
-                H[k] = P[i];
-                k++;
+                upperHull[upperLength] = P[i];
+                upperLength++;
             }
-            if (k > 1) {
-                H = Arrays.copyOfRange(H, 0, k - 1); // remove non-hull vertices after k; remove k - 1 which is a duplicate
+
+            // Combine lower hull and upper hull
+            Point[] result = new Point[2 * n];
+            int t = 0;
+            for (int i=0 ; i<lowerLength - 1 ; i++){
+                result[t] = lowerHull[i];
+                t++;
             }
-            return H;
+            for (int i=0 ; i<upperLength - 1 ; i++){
+                result[t] = upperHull[i];
+                t++;
+            }
+
+            if (t > 1) {
+                result = Arrays.copyOfRange(result, 0, t);
+            }
+            return result;
         } else if (P.length <= 2) {
             return P.clone();
         } else {
             return null;
         }
     }
-
-    public static void main(String[] args) {
-        Point[] points = new Point[10];
-        points[0] = new Point(10, 1);
-        points[1] = new Point(2, 2);
-        points[2] = new Point(2, 3);
-        points[3] = new Point(3, 4);
-        points[4] = new Point(9, 5);
-        points[5] = new Point(9, 6);
-        points[6] = new Point(6, 7);
-        points[7] = new Point(6, 8);
-        points[8] = new Point(5, 9);
-        points[9] = new Point(8, 10);
-        
-        Point[] hull = convex_hull(points);
-        
-        for (int i = 0; i < hull.length; i++) {
-            if (hull[i] != null)
-                System.out.println(hull[i]);
-        }
-    }
-
 }

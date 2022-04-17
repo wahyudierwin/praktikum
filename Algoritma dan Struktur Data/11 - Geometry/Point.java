@@ -1,7 +1,6 @@
 class Point implements Comparable<Point> {
     double x, y;
 
-    private double EPS = 1e-9;
     public Point(){
         x = 0.0;
         y = 0.0;
@@ -13,18 +12,26 @@ class Point implements Comparable<Point> {
     }
 
     public int compareTo(Point other) {
+        double EPS = 1e-9;
+        double tmp;
+
         if (Math.abs(x - other.x) > EPS){
-            return (int)Math.ceil(x - other.x);
+            tmp = x - other.x;
+            if (tmp > EPS) return 1;
+            else return -1;
         }
         else if (Math.abs(y - other.y) > EPS){
-            return (int)Math.ceil(y - other.y);
+            tmp = y - other.y;
+            if (tmp > EPS) return 1;
+            else return -1;
+
         }
         else {
-            return 0;  
+            return 0;
         }
     }
 
     public String toString() {
-        return "(" + x + "," + y + ")";
+        return "(" + x + ", " + y + ")";
     }
 }
