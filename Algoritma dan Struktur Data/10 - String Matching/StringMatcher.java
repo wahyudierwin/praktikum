@@ -23,54 +23,44 @@ public class StringMatcher {
         }
     }
 
-    public static void kmp(String text, String pattern){
-        int textLen = text.length();
-        int patternLen = pattern.length();
+    private static int[] computeLPSArray(String str){
+        int len = str.length();
 
-        int[] lps = computeLPSArray(pattern, patternLen);
+        int[] lps = new int[len];
+        lps[0] = 0;
 
-        int textIndex = 0;
-        int patternIndex = 0;
+        for (int i=1 ; i<len ; i++){
+            int j = lps[i-1];
 
-        boolean found = false;
-        int j=0;
-
-        for (int i=0 ; i<textLen ; i++){
-            while ((j > 0) && (text.charAt(i) != pattern.charAt(j))) {
+            while ((j > 0) && (str.charAt(i) != str.charAt(j))){
                 j = lps[j-1];
             }
-            if (text.charAt(i) == pattern.charAt(j)){
+            if (str.charAt(i) == str.charAt(j)){
                 j++;
-                if (j == patternLen){
-                    found = true;
-                    System.out.println("Found pattern at index " + (i - j + 1) + " using KMP.");
-                    j = lps[j-1];
-                }
+            }
+            lps[i] = j;
+        }
+
+        return lps;
+    }
+
+    public static void kmp(String text, String pattern){
+        String combined = pattern + "#" + text;
+        int combinedLen = combined.length();
+        int patternLen = pattern.length();
+
+        int lps[] = computeLPSArray(combined);
+
+        boolean found = false;
+        for (int i=patternLen+1 ; i<combinedLen ; i++){
+            if (lps[i] == patternLen){
+                found = true;
+                System.out.println("Found pattern at index " + (i - 2*patternLen) + " using KMP.");
             }
         }
 
         if (!found){
             System.out.println("Pattern not found using KMP.");
         }
-    }
-
-    private static int[] computeLPSArray(String pattern, int patternLen){
-        int[] lps = new int[patternLen];
-
-        int curLen = 0;
-
-        lps[0] = 0;
-
-        for (int i=1 ; i<patternLen ; i++){
-            while ((curLen > 0) && (pattern.charAt(i) != pattern.charAt(curLen))){
-                curLen = lps[curLen-1];
-            }
-            if (pattern.charAt(i) == pattern.charAt(curLen)){
-                curLen++;
-                lps[i] = curLen;
-            }
-        }
-
-        return lps;
     }
 }
