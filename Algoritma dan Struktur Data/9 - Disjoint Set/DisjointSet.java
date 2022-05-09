@@ -31,18 +31,18 @@ public class DisjointSet {
         int secondItemParent = find(secondItem);
 
         if (firstItemParent != secondItemParent){
-            int firstItemRank = this.sets[firstItem].getRank();
-            int secondItemRank = this.sets[secondItem].getRank();
+            int firstRank = this.sets[firstItemParent].getRank();
+            int secondRank = this.sets[secondItemParent].getRank();
 
-            if (firstItemRank < secondItemRank){
-                this.sets[firstItem].setParent(secondItem);
+            if (firstRank < secondRank){
+                this.sets[firstItemParent].setParent(secondItemParent);
             }
-            else if (firstItemRank > secondItemRank){
-                this.sets[secondItem].setParent(firstItem);
+            else if (firstRank > secondRank){
+                this.sets[secondItemParent].setParent(firstItemParent);
             }
             else{
-                this.sets[secondItem].setParent(firstItem);
-                this.sets[firstItem].setRank(firstItemRank + 1);
+                this.sets[secondItemParent].setParent(firstItemParent);
+                this.sets[firstItemParent].setRank(firstRank + 1);
             }
         }
     }
